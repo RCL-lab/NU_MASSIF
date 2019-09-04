@@ -1,0 +1,148 @@
+ counter :       7107
+ counter :       7119
+[            33518000] : starting H2C DMA channels 
+[            33518000] : Setting DDRA Command Registers 
+ counter :       7204
+ : Gbr_input[0] adress: 0x00002056 
+ counter :       7219
+ : Gbr_input[1] adress: 0x00002066 
+ counter :       7294
+ : enable_bits: 0x         1 
+ counter :       7295
+ : state: 0x  1 
+ counter :       7296
+ : state: 0x  2 
+ counter :       7297
+ : state: 0x  3 
+ counter :       7298
+ : axi_mstr_states : 0x4 
+ counter :       7299
+ : axi_mstr_states : 0x5 
+ counter :       7300
+ counter :       7314
+[            34298000] : Waiting for core command to complete.  
+ counter :       7347
+ : Ga ns: 0x15363c1d9f196c816ab5 
+ counter :       7348
+ : axi_mstr_states : 0x0 
+ : state: 0x  6 
+ : Ga 0: 0x15363c1d9f196c816ab5 
+ counter :       7349
+ : state: 0x  7 
+ counter :       7350
+ : axi_mstr_states : 0x4 
+ counter :       7351
+ : axi_mstr_states : 0x5 
+ counter :       7352
+ counter :       7400
+ : axi_mstr_states : 0x0 
+ : state: 0x 10 
+ : Gb 0: 0x7ef2d7a11550f13f7a23 
+ : Gc 0: 0xca44923868e9d4c49c31 
+ : toSend01: 0xca44923868e9d4c49c31 
+ : toSend10: 0xca44923868e9d4c49c31 
+ : toSend11: 0xca44923868e9d4c49c31 
+ counter :       7401
+ : state: 0x 29 
+ : Gc 0: 0xad01b13987247f4d048b 
+ counter :       7402
+ : state: 0x 57 
+ counter :       7403
+ : state: 0x 85 
+ counter :       7404
+ : state: 0x113 
+ counter :       7405
+ : state: 0x127 
+ counter :       7406
+ : state: 0x141 
+ counter :       7407
+ : state: 0x155 
+ counter :       7408
+ : state: 0x 11 
+ counter :       7409
+ counter :       7482
+ : Gc 0: 0x3d9d0a3afaf27ead979b 
+ : toSend01: 0x217dbf9903c039ab6a5b 
+ : toSend10: 0xd5920c7c931f3794ed1e 
+ : toSend11: 0xac0e97cae787e3ac1b39 
+ counter :       7483
+ : state: 0x 15 
+ counter :       7484
+ monitor bram_addra_wr : 0x00000010
+ monitor is wr data: 0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003d9d0a3afaf27ead979b
+ : state: 0x 14 
+ counter :       7485
+ : state: 0x 17 
+ counter :       7486
+ : axi_mstr_states : 0x1 
+ counter :       7487
+ : axi_mstr_states : 0x2 
+ counter :       7488
+ : axi_mstr_states : 0x3 
+ :axi_mstr_sm_wr_resp : 0x1 
+ counter :       7489
+ counter :       7516
+ : bvalid : 0x1 
+ counter :       7517
+ : axi_mstr_states : 0x0 
+ : state: 0x 18 
+ :axi_mstr_sm_wr_resp : 0x0 
+ : bvalid : 0x0 
+ counter :       7518
+ : state: 0x 21 
+ counter :       7519
+ : axi_mstr_states : 0x1 
+ counter :       7520
+ : axi_mstr_states : 0x2 
+ counter :       7521
+ : axi_mstr_states : 0x3 
+ :axi_mstr_sm_wr_resp : 0x1 
+ counter :       7522
+ counter :       7549
+ : bvalid : 0x1 
+ counter :       7550
+ : axi_mstr_states : 0x0 
+ : state: 0x 22 
+ :axi_mstr_sm_wr_resp : 0x0 
+ : bvalid : 0x0 
+ counter :       7551
+ : state: 0x 25 
+ counter :       7552
+ : axi_mstr_states : 0x1 
+ counter :       7553
+ : axi_mstr_states : 0x2 
+ counter :       7554
+ : axi_mstr_states : 0x3 
+ :axi_mstr_sm_wr_resp : 0x1 
+ counter :       7555
+ counter :       7583
+ : bvalid : 0x1 
+ counter :       7584
+ : axi_mstr_states : 0x0 
+ : state: 0x 39 
+ :axi_mstr_sm_wr_resp : 0x0 
+ : bvalid : 0x0 
+ counter :       7585
+ : state: 0x 67 
+ counter :       7586
+ : state: 0x 95 
+ counter :       7587
+ : state: 0x123 
+ counter :       7588
+ : state: 0x137 
+ counter :       7589
+ : state: 0x151 
+ counter :       7590
+ : state: 0x165 
+ counter :       7591
+ : state: 0x185 
+ counter :       7592
+ : state: 0x  0 
+ : Gc 0: 0xca44923868e9d4c49c31 
+ : toSend01: 0xca44923868e9d4c49c31 
+ : toSend10: 0xca44923868e9d4c49c31 
+ : toSend11: 0xca44923868e9d4c49c31 
+ counter :       7593
+ counter :       7661
+ : Gbr_input[8] adress: 0x80000010 
+ counter :       7662

@@ -1,0 +1,74 @@
+Constants,
+ , 
+     ZERO48BIT	    ,	std_logic_vector(47 downto 0) = (others => '0');
+     ZERO56BIT	    ,	std_logic_vector(55 downto 0) = (others => '0');
+     ZERO60BIT	    ,	std_logic_vector(59 downto 0) = (others => '0');
+     ONE60BIT	    ,	std_logic_vector(59 downto 0) = (others => '1');
+     ONE52BIT	    ,	std_logic_vector(51 downto 0) = (others => '1');
+     ONE54BIT	    ,	std_logic_vector(53 downto 0) = (others => '1');
+     ONE53BIT	    ,	std_logic_vector(52 downto 0) = (others => '1');
+     ZERO352BIT	,	std_logic_vector(351 downto 0)= (others => '0');
+     ZERO480BIT	,	std_logic_vector(479 downto 0)= (others => '0');
+     ZERO448BIT	,	std_logic_vector(447 downto 0)= (others => '0');
+     ZERO416BIT	,	std_logic_vector(415 downto 0)= (others => '0');
+     ZERO432BIT	,	std_logic_vector(431 downto 0)= (others => '0');
+     ZERO424BIT	,	std_logic_vector(423 downto 0)= (others => '0');
+     ALLONE		,	std_logic_vector(GATE_NUM - 1 downto 0) = (others => '1');
+ , 
+Types,
+ , 
+arr_19x0_31x0, ARRAY  ( 19 DOWNTO 0 )  OF   STD_LOGIC_VECTOR( 31 DOWNTO 0 );
+arr_2x0_31x0, ARRAY  ( 2  DOWNTO 0 )  OF   STD_LOGIC_VECTOR( 31 DOWNTO 0 );
+arr_39x0_31x0, ARRAY  ( 39 DOWNTO 0 )  OF   STD_LOGIC_VECTOR( 31 DOWNTO 0 );
+locid, ARRAY (GATE_NUM - 1 DOWNTO 0) OF std_logic_vector(31 downto 0);
+locid_xor, ARRAY (GATE_NUM - 1 DOWNTO 0) OF std_logic_vector(31 downto 0);
+twodim, ARRAY (GATE_NUM - 1 DOWNTO 0) OF std_logic_vector(79 downto 0);
+andid, ARRAY (GATE_NUM - 1 DOWNTO 0) OF std_logic_vector(63 downto 0);
+arr_and_gt_id, ARRAY (2*GATE_NUM -1 DOWNTO 0) OF std_logic_vector(31 downto 0);
+arr_num_1x0, ARRAY (GATE_NUM - 1 DOWNTO 0) OF STD_LOGIC_VECTOR(1 downto 0);
+ , 
+Signals, 
+ , 
+ ,locid
+ ,locid
+ ,locid
+ ,std_logic_vector(GATE_NUM -1 downto 0)
+ ,std_logic
+ ,std_logic
+ ,locid
+ ,locid
+ ,locid
+ ,STD_LOGIC_VECTOR(GATE_NUM -1 downto 0)
+ ,STD_LOGIC_VECTOR(GATE_NUM -1 downto 0)
+ ,arr_and_gt_id
+ ,std_logic
+ ,std_logic
+ ,std_logic
+ ,arr_num_1x0
+ ,std_logic_vector(GATE_NUM - 1 downto 0)
+ ,std_logic
+ ,twodim
+ ,std_logic_vector(GATE_NUM - 1 downto 0)
+ ,twodim
+ ,twodim
+ ,std_logic_vector(79 downto 0)
+ ,andid
+ ,twodim
+ ,twodim
+ ,twodim
+ ,std_logic_vector(GATE_NUM - 1 downto 0)
+ ,std_logic_vector(GATE_NUM - 1 downto 0)
+ ,std_logic_vector(GATE_NUM - 1 downto 0)
+ , std_logic_vector(GATE_NUM -1 downto 0)
+ ,std_logic_vector(GATE_NUM -1 downto 0)
+ ,std_logic_vector(GATE_NUM -1 downto 0)
+ ,std_logic
+ ,std_logic_vector(31 downto 0)
+ ,std_logic_vector(31 downto 0)
+ ,locid_xor
+ , state_type
+ ,  std_array
+ ,STD_LOGIC_VECTOR (15 DOWNTO 0)
+ ,STD_LOGIC_VECTOR (107 DOWNTO 0)
+ ,STD_LOGIC
+ ,STD_LOGIC_VECTOR (107 DOWNTO 0)

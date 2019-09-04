@@ -1,0 +1,402 @@
+ COMPONENT(dma)
+ {
+      ic                :   1;
+      hw_path           :   ..\..\dma\dma.rbf;
+      sw_path           :   ..\..\dma\dma.rbf;
+      hwg_path          :   D:\Drive\Research_Backup\2017_07_02_15andgate_1xor\hw_15and;
+
+
+      features          :   
+       {
+           PCIE_GEN3;
+           2V5;
+       }
+
+    IP_CORE
+    {
+        MP(mp)
+        {
+             mem_address_width :   32;
+             mem_data_width    :   64;
+             clock             :   667.000;
+             mem_block         :   B;
+             sodimm            :   SODIMM_8GB;
+
+            PORT(wr)
+            {
+                 width             :   256;
+                 port_access       :   sequential;
+                 port_direction    :   write;
+                 memory_clock      :   false;
+                 empty             :   true;
+                 almost_empty      :   false;
+                 almost_full       :   true;
+                 dimension         :   false;
+                 fixed             :   true;
+                 start             :   0H;
+                 port_ptr          :   false;
+                 port_flush        :   false;
+                 pci_port          :   PCI Port;
+
+                ENTITY(wr)
+                {
+
+                    MEMORY(mp_wr)
+                    {
+                         offset            :   300000H;
+                         size              :   20H;
+                         direction         :   out;
+                         mode              :   qdword;
+                         struct_size       :   32;
+                         fifo_inerface     :   true;
+
+                    }
+
+                    REGGROUP(start_mp_wr)
+                    {
+                         offset            :   300020H;
+                         size              :   4H;
+                         direction         :   out;
+
+                        REGISTER(start_mp_wr)
+                        {
+                             from_bit          :   0;
+                             to_bit            :   31;
+                             direction         :   out;
+
+                        }
+
+                    }
+
+                    REGISTER(status_wr)
+                    {
+                         offset            :   200070H;
+                         from_bit          :   0;
+                         to_bit            :   31;
+                         direction         :   in;
+
+                        FIELD(almost_full_wr)
+                        {
+                             from_bit          :   1;
+                             to_bit            :   1;
+                             from_value        :   0H;
+                             to_value          :   1H;
+                             direction         :   in;
+
+                        }
+
+                        FIELD(empty_wr)
+                        {
+                             from_bit          :   2;
+                             to_bit            :   2;
+                             from_value        :   0H;
+                             to_value          :   1H;
+                             direction         :   in;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            PORT(rd)
+            {
+                 width             :   256;
+                 port_access       :   sequential;
+                 port_direction    :   read;
+                 memory_clock      :   false;
+                 empty             :   true;
+                 almost_empty      :   true;
+                 almost_full       :   true;
+                 dimension         :   false;
+                 fixed             :   true;
+                 start             :   0H;
+                 port_ptr          :   false;
+                 port_flush        :   false;
+                 pci_port          :   PCI Port;
+
+                ENTITY(rd)
+                {
+
+                    MEMORY(mp_rd)
+                    {
+                         offset            :   300040H;
+                         size              :   20H;
+                         direction         :   in;
+                         mode              :   qdword;
+                         struct_size       :   32;
+                         fifo_inerface     :   true;
+
+                    }
+
+                    REGGROUP(start_mp_rd)
+                    {
+                         offset            :   300060H;
+                         size              :   4H;
+                         direction         :   out;
+
+                        REGISTER(start_mp_rd)
+                        {
+                             from_bit          :   0;
+                             to_bit            :   31;
+                             direction         :   out;
+
+                        }
+
+                    }
+
+                    REGISTER(status_rd)
+                    {
+                         offset            :   200080H;
+                         from_bit          :   0;
+                         to_bit            :   31;
+                         direction         :   in;
+
+                        FIELD(almost_empty_rd)
+                        {
+                             from_bit          :   0;
+                             to_bit            :   0;
+                             from_value        :   0H;
+                             to_value          :   1H;
+                             direction         :   in;
+
+                        }
+
+                        FIELD(almost_full_rd)
+                        {
+                             from_bit          :   1;
+                             to_bit            :   1;
+                             from_value        :   0H;
+                             to_value          :   1H;
+                             direction         :   in;
+
+                        }
+
+                        FIELD(empty_rd)
+                        {
+                             from_bit          :   2;
+                             to_bit            :   2;
+                             from_value        :   0H;
+                             to_value          :   1H;
+                             direction         :   in;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            PORT(gc)
+            {
+                 width             :   512;
+                 port_access       :   random;
+                 port_direction    :   read;
+                 memory_clock      :   false;
+                 empty             :   false;
+                 almost_empty      :   false;
+                 almost_full       :   false;
+                 dimension         :   false;
+                 fixed             :   true;
+                 start             :   0H;
+                 port_ptr          :   false;
+                 port_flush        :   false;
+                 pci_port          :   Not PCI Port;
+                 clk_name          :   lclk;
+                 clk_freq          :   100.000;
+                 clk_pll           :   false;
+                 clk_unit          :   gc_comp;
+
+            }
+
+        }
+
+    }
+
+    CLOCK(bank_b_clk)
+    {
+         main_clk          :   667.000;
+    }
+
+    CLOCK(bank_c_clk)
+    {
+         main_clk          :   667.000;
+    }
+
+    ENTITY(gc_comp)
+    {
+
+        REGISTER(addr_1v)
+        {
+             offset            :   200500H;
+             from_bit          :   0;
+             to_bit            :   31;
+             direction         :   out;
+             array_size        :   20;
+             array_names       :   
+
+        }
+
+        REGISTER(addr_2v)
+        {
+             offset            :   200550H;
+             from_bit          :   0;
+             to_bit            :   31;
+             direction         :   out;
+             array_size        :   20;
+             array_names       :   
+
+        }
+
+        REGISTER(addr_3v)
+        {
+             offset            :   2005a0H;
+             from_bit          :   0;
+             to_bit            :   31;
+             direction         :   out;
+             array_size        :   20;
+             array_names       :   
+
+        }
+
+        REGISTER(comp_done)
+        {
+             offset            :   200040H;
+             from_bit          :   0;
+             to_bit            :   0;
+             direction         :   in;
+
+        }
+
+        REGISTER(gc_and_en)
+        {
+             offset            :   200050H;
+             from_bit          :   0;
+             to_bit            :   19;
+             direction         :   out;
+
+        }
+
+        REGISTER(R)
+        {
+             offset            :   200060H;
+             from_bit          :   0;
+             to_bit            :   31;
+             direction         :   out;
+             array_size        :   3;
+             array_names       :   
+
+        }
+
+        REGISTER(and_gt_id)
+        {
+             offset            :   2005f0H;
+             from_bit          :   0;
+             to_bit            :   31;
+             direction         :   out;
+             array_size        :   40;
+             array_names       :   
+
+        }
+
+        REGISTER(layer_num)
+        {
+             offset            :   2000e0H;
+             from_bit          :   0;
+             to_bit            :   31;
+             direction         :   out;
+
+        }
+
+        REGISTER(addr_1v_xor)
+        {
+             offset            :   200690H;
+             from_bit          :   0;
+             to_bit            :   31;
+             direction         :   out;
+             array_size        :   20;
+             array_names       :   
+
+        }
+
+        REGISTER(addr_2v_xor)
+        {
+             offset            :   2006e0H;
+             from_bit          :   0;
+             to_bit            :   31;
+             direction         :   out;
+             array_size        :   20;
+             array_names       :   
+
+        }
+
+        REGISTER(addr_3v_xor)
+        {
+             offset            :   200730H;
+             from_bit          :   0;
+             to_bit            :   31;
+             direction         :   out;
+             array_size        :   20;
+             array_names       :   
+
+        }
+
+        REGISTER(gc_xor_en)
+        {
+             offset            :   2004b0H;
+             from_bit          :   0;
+             to_bit            :   19;
+             direction         :   out;
+
+        }
+
+        REGISTER(xor_gt_id)
+        {
+             offset            :   200780H;
+             from_bit          :   0;
+             to_bit            :   31;
+             direction         :   out;
+             array_size        :   20;
+             array_names       :   
+
+        }
+
+        CLOCK(lclk)
+        {
+        }
+
+    }
+
+    REGISTER(RBF_Info)
+    {
+         offset            :   200000H;
+         from_bit          :   0;
+         to_bit            :   31;
+         direction         :   in;
+         description       :   
+    	 {
+    	   version of RBF
+    	 }
+
+        FIELD(rbf_version)
+        {
+             from_bit          :   0;
+             to_bit            :   7;
+             from_value        :   0H;
+             to_value          :   ffH;
+             direction         :   in;
+
+            VALUE(RBF_VERSION_VAL)
+            {
+                 value             :   1H;
+            }
+
+        }
+
+    }
+
+ }
+

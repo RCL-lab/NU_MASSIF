@@ -1,0 +1,19 @@
+state 1  : 1 
+state 2  : 1
+state 3  : 51
+state 7  : 53
+state 11 : 75
+stete 17 : 32
+state 21 : 32
+state 25 : 33
+
+--------------------------
+Setting 2 regs for one core         : 90
+Setting registers (8 core 16 regs)  :710
+load ddr Ga_0 :90
+load ddr Gb_0 :53
+load ddr Ga_1 :51
+load ddr Gb_1 :52
+process : 75
+write ddr : 32
+

@@ -1,0 +1,14 @@
+connecting
+connected
+Eva running time:0.002721875
+Number Of AND Gates:0
+Total Time 	 GC CPU Time	 GCIO Time	 OTCPU Time	 OTIO Time
+
+0.002713055	0 (counter is :1)	0.0 0.0	0.0
+
+Number of Gate:0
+
+********************************
+Data Sent from Client :3.814697265625E-6MB
+Data Sent to Client :3.814697265625E-6MB
+********************************

@@ -1,0 +1,275 @@
+     
+    --*********************************************************************
+    --*  SUBDESIGN  IC_1_Bank_B_Ctrl                                      *
+    --*  Created    :  Wed Aug 02 23:42:49 2017                           *
+    --*********************************************************************
+    
+
+
+
+
+  INCLUDE          "g_hp_mp_dram.inc";
+   
+  --Global Constants
+  CONSTANT  CLK_FREQ              =   667;
+  CONSTANT  MEM_CONTROLLER_MODE   =   "QUARTER_RATE";
+  CONSTANT  BOARD                 =   "DDRIII_SODIMM_8GB";
+  CONSTANT  MEM_WIDTH             =   64;
+  CONSTANT  MEM_ADDR_WIDTH        =   32;
+  
+  
+   
+  --Port Names
+  CONSTANT  mp_wr                 =   0;
+  CONSTANT  mp_rd                 =   1;
+  CONSTANT  mp_gc                 =   2;
+  
+  
+   
+  --Misc. Constants
+  CONSTANT  ADDR_WR               =   0;
+  CONSTANT  ADDR_PORT_RD          =   0;
+  
+  SUBDESIGN   IC_1_Bank_B_Ctrl
+     (
+     
+    --Global MultiPort Connections
+        clrn                       : INPUT;                    -- MultiPort async global reset
+        ref_clk                    : INPUT;                    -- mem ref clock
+        pll_mem_clk                : INPUT;
+        pll_write_clk              : INPUT;
+        pll_write_clk_pre_phy_clk   : INPUT;
+        pll_addr_cmd_clk           : INPUT;
+        pll_hr_clk                 : INPUT;
+        pll_p2c_read_clk           : INPUT;
+        pll_c2p_write_clk          : INPUT;
+        pll_avl_clk                : INPUT;
+        pll_config_clk             : INPUT;
+        pll_locked                 : INPUT;
+        afi_clk                    : INPUT;
+        afi_half_clk               : INPUT;
+        g_reserved_control[99..0]   : INPUT;                   -- SDRAM Connection
+        ready                      : OUTPUT;                   -- 1: Memory controller is ready for use, 0: Initializing (due to reset)
+     
+    --SDRAM Connections
+        data[63..0]                : BIDIR;                    -- Memory data
+        addr[15..0]                : OUTPUT;                   -- Memory address
+        dqm[7..0]                  : OUTPUT;                   -- DQM signal from MultiPort
+        dqs[7..0]                  : BIDIR;                    -- DQS signal from MultiPort
+        dqsn[7..0]                 : BIDIR;                    -- DQSN signal from MultiPort
+        ba[2..0]                   : OUTPUT;                   -- SDRAM control signal
+        cs_bus[1..0]               : OUTPUT;                   -- Chip Select signal from MultiPort
+        ce[1..0]                   : OUTPUT;                   -- Clock Enable signal from MultiPort
+        ras                        : OUTPUT;                   -- RAS signal from MultiPort
+        cas                        : OUTPUT;                   -- CAS signal from MultiPort
+        we                         : OUTPUT;                   -- Write Enable signal from MultiPort
+        odt[1..0]                  : OUTPUT;                   -- ODT signal from MultiPort
+        ck[1..0]                   : OUTPUT;                   -- CK
+        ckn[1..0]                  : OUTPUT;                   -- CKN
+        oct_rzqin                  : INPUT;                    -- RZK signal from MultiPort
+        event_in                   : INPUT;                    -- event signal from MultiPort
+        mem_reset_n                : OUTPUT;                   -- resetn signal from MultiPort
+     
+    --Port wr Connections
+        clk_wr                     : INPUT;                    -- Port clock
+        start_wr                   : INPUT;                    -- Port start (reset) signal
+        select_wr                  : INPUT;                    -- Port select (enable) signal
+        data_wr[255..0]            : INPUT;                    -- Data to port wr of MultiPort mp
+        empty_wr                   : OUTPUT;                   -- Port empty flag (goes high when the internal FIFO is empty)
+        almost_full_wr             : OUTPUT;                   -- Port almost_full flag (goes high when the internal FIFO more than 7/8 full)
+        port_error_wr              : OUTPUT;                   -- Port port_error flag (goes high when an error occur to port (read from empty FIFO or write to full FIFO)
+        g_dreq_mp_wr               : OUTPUT;                   -- DMA transfer hold request from the port
+     
+    --Port rd Connections
+        clk_rd                     : INPUT;                    -- Port clock
+        start_rd                   : INPUT;                    -- Port start (reset) signal
+        select_rd                  : INPUT;                    -- Port select (enable) signal
+        data_rd[255..0]            : OUTPUT;                   -- Data from port rd of MultiPort mp
+        empty_rd                   : OUTPUT;                   -- Port empty flag (goes high when the internal FIFO is empty)
+        almost_empty_rd            : OUTPUT;                   -- Port almost_empty flag (goes low when the internal FIFO more than 1/8 full)
+        almost_full_rd             : OUTPUT;                   -- Port almost_full flag (goes high when the internal FIFO more than 7/8 full)
+        port_error_rd              : OUTPUT;                   -- Port port_error flag (goes high when an error occur to port (read from empty FIFO or write to full FIFO)
+        g_dreq_mp_rd               : OUTPUT;                   -- DMA transfer hold request from the port
+     
+    --Port gc Connections
+        clk_gc                     : INPUT;                    -- Port clock
+        select_gc                  : INPUT;                    -- Port select (enable) signal
+        data_gc_in[511..0]         : INPUT;                    -- Data to port gc of MultiPort mp
+        data_gc_out[511..0]        : OUTPUT;                   -- Data from port gc of MultiPort mp
+        gc_be[63..0]               : INPUT;                    -- Random port byte enable bits
+        addr_gc[31..0]             : INPUT;                    -- Port address input
+        write_gc                   : INPUT;                    -- Port read\write signal
+        ready_gc                   : OUTPUT                    -- Port ready flag (goes high when the data is ready)
+    )
+   
+   
+   
+   
+  
+  
+  VARIABLE
+
+    multiport :g_hp_mp_dram
+
+    WITH  (
+    CLK_FREQ              = CLK_FREQ,
+    MEM_IF_CS_WIDTH       = 2,
+    MEM_IF_CLK_PAIR_COUNT  = 2,
+    MEM_CONTROLLER_MODE   = MEM_CONTROLLER_MODE,
+    BOARD                 = BOARD,
+    MEM_WIDTH             = MEM_WIDTH,
+    MEM_ADDR_WIDTH        = MEM_ADDR_WIDTH,
+    NUMBER_OF_PORTS       = 3,
+     
+    --PORT 0 of the MultiPort: mp_wr
+    PORT_A_WIDTH          = 256,
+    PORT_A_ACCESS         = "SEQUENTIAL",
+    PORT_A_DIRECTION      = "WRITE",
+    
+     
+    --PORT 1 of the MultiPort: mp_rd
+    PORT_B_WIDTH          = 256,
+    PORT_B_ACCESS         = "SEQUENTIAL",
+    PORT_B_DIRECTION      = "READ",
+    
+     
+    --PORT 2 of the MultiPort: mp_gc
+    PORT_C_WIDTH          = 512,
+    PORT_C_ACCESS         = "RANDOM",
+    
+     
+    --Unused Ports the MultiPort
+    PORT_D_WIDTH          = 0,
+    PORT_E_WIDTH          = 0,
+    PORT_F_WIDTH          = 0,
+    PORT_G_WIDTH          = 0,
+    PORT_H_WIDTH          = 0,
+    PORT_I_WIDTH          = 0,
+    PORT_J_WIDTH          = 0,
+    PORT_K_WIDTH          = 0,
+    PORT_L_WIDTH          = 0,
+    PORT_M_WIDTH          = 0,
+    PORT_N_WIDTH          = 0,
+    PORT_O_WIDTH          = 0,
+    PORT_P_WIDTH          = 0 
+    );
+  
+   
+  -- Internal variables and nodes
+   
+  mem_clk                    : NODE;
+  multiport_ba[2..0]         : NODE;
+  multiport_cs_bus[7..0]     : NODE;
+  multiport_ce[1..0]         : NODE;
+  addr_gc_in[31..0]          : NODE;
+  
+  
+  BEGIN
+  --======================================================================
+  --=                           Logic section                            =
+  --======================================================================
+  
+  mem_clk = multiport.mem_clk_int;
+   
+  ba[] = multiport_ba[2..0];
+   
+  cs_bus[1..0] = multiport_cs_bus[1..0];
+   
+  ce[1..0] = multiport_ce[1..0];
+  addr_gc_in[31..0] = addr_gc[31..0];
+  
+  
+  --======================================================================
+  --=                        Connection section                          =
+  --======================================================================
+  
+   
+  --Global MultiPort Connections
+  
+  multiport.clrn                       =  clrn;                              -- MultiPort async global reset
+  multiport.ref_clk                    =  ref_clk;                           -- mem ref clock
+  multiport.pll_mem_clk                =  pll_mem_clk;
+  multiport.pll_write_clk              =  pll_write_clk;
+  multiport.pll_write_clk_pre_phy_clk   =  pll_write_clk_pre_phy_clk;
+  multiport.pll_addr_cmd_clk           =  pll_addr_cmd_clk;
+  multiport.pll_hr_clk                 =  pll_hr_clk;
+  multiport.pll_p2c_read_clk           =  pll_p2c_read_clk;
+  multiport.pll_c2p_write_clk          =  pll_c2p_write_clk;
+  multiport.pll_avl_clk                =  pll_avl_clk;
+  multiport.pll_config_clk             =  pll_config_clk;
+  multiport.pll_locked                 =  pll_locked;
+  multiport.afi_clk                    =  afi_clk;
+  multiport.afi_half_clk               =  afi_half_clk;
+  multiport.g_reserved_control[99..0]   =  g_reserved_control[99..0];        -- SDRAM Connection
+  ready                                =  multiport.ready;                   -- 1: Memory controller is ready for use, 0: Initializing (due to reset)
+  
+   
+  --SODIMM Connections
+  
+  
+   
+  --SDRAM Connections
+  
+  multiport.active_cs_mask             =  1;                                 -- SODIMM internal control
+  data[63..0]                          =  multiport.data[63..0];             -- Memory data
+  addr[15..0]                          =  multiport.addr[15..0];             -- Memory address
+  dqm[7..0]                            =  multiport.dqm[7..0];               -- DQM signal from MultiPort
+  dqs[7..0]                            =  multiport.dqs[7..0];               -- DQS signal from MultiPort
+  dqsn[7..0]                           =  multiport.dqsn[7..0];              -- DQSN signal from MultiPort
+  multiport_ba[2..0]                   =  multiport.ba[2..0];                -- SDRAM control signal
+  multiport_cs_bus[7..0]               =  multiport.cs_bus[7..0];            -- Chip Select signal from MultiPort
+  multiport_ce                         =  multiport.ce;                      -- Clock Enable signal from MultiPort
+  ras                                  =  multiport.ras;                     -- RAS signal from MultiPort
+  cas                                  =  multiport.cas;                     -- CAS signal from MultiPort
+  we                                   =  multiport.we;                      -- Write Enable signal from MultiPort
+  odt[1..0]                            =  multiport.odt[1..0];               -- ODT signal from MultiPort
+  ck[1..0]                             =  multiport.ck[1..0];                -- CK
+  ckn[1..0]                            =  multiport.ckn[1..0];               -- CKN
+  multiport.oct_rzqin                  =  oct_rzqin;                         -- RZK signal from MultiPort
+  multiport.event_in                   =  event_in;                          -- event signal from MultiPort
+  mem_reset_n                          =  multiport.mem_reset_n;             -- resetn signal from MultiPort
+  
+  
+   
+  --Ports of the MultiPort
+  
+  
+   
+  --Port mp_wr:
+  multiport.clk[mp_wr]                 =  clk_wr;
+  multiport.port_start[mp_wr]          =  start_wr;
+  multiport.port_select[mp_wr]         =  select_wr;
+  multiport.port_a_data_in[255..0] = data_wr[255..0];
+  multiport.port_addr[mp_wr][]         =  ADDR_WR;
+  empty_wr                             =  multiport.empty[mp_wr];
+  almost_full_wr                       =  multiport.almost_full[mp_wr];
+  port_error_wr                        =  multiport.port_error[mp_wr];
+  g_dreq_mp_wr          =                multiport.g_dreq[mp_wr];
+  
+   
+  --Port mp_rd:
+  multiport.clk[mp_rd]                 =  clk_rd;
+  multiport.port_start[mp_rd]          =  start_rd;
+  multiport.port_select[mp_rd]         =  select_rd;
+  data_rd[255..0] = multiport.port_b_data_out[255..0];
+  multiport.port_addr[mp_rd][]         =  ADDR_PORT_RD;
+  empty_rd                             =  multiport.empty[mp_rd];
+  almost_empty_rd                      =  multiport.almost_empty[mp_rd];
+  almost_full_rd                       =  multiport.almost_full[mp_rd];
+  port_error_rd                        =  multiport.port_error[mp_rd];
+  g_dreq_mp_rd          =                multiport.g_dreq[mp_rd];
+  
+   
+  --Port mp_gc:
+  multiport.clk[mp_gc]                 =  clk_gc;
+  multiport.port_select[mp_gc]         =  select_gc;
+  multiport.port_c_data_in[511..0] = data_gc_in[511..0];
+  data_gc_out[511..0] = multiport.port_c_data_out[511..0];
+  multiport.port_c_be[63..0] = gc_be[63..0];
+  multiport.port_addr[mp_gc][]         =  addr_gc_in[];
+  multiport.port_write[mp_gc]          =  write_gc;
+  ready_gc                             =  multiport.port_ready[mp_gc];
+  
+  END;
+  
+  

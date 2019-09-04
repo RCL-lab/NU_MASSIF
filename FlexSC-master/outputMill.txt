@@ -1,0 +1,75 @@
+connecting
+connecting
+connected
+connected
+Eva running time:0.002638148
+Number Of AND Gates:0
+Total Time 	 GC CPU Time	 GCIO Time	 OTCPU Time	 OTIO Time
+
+0.002630976	0 (counter is :1)	0.0 0.0	0.0
+
+Number of Gate:0
+
+********************************
+Data Sent from Client :3.0517578125E-5MB
+Data Sent to Client :3.0517578125E-5MB
+********************************
+8 XOR 17 = 18
+9 XOR 17 = 19
+10 XOR 17 = 20
+11 XOR 17 = 21
+12 XOR 17 = 22
+13 XOR 17 = 23
+14 XOR 17 = 24
+15 XOR 17 = 25
+0 XOR 26 = 27
+18 XOR 26 = 28
+0 XOR 28 = 29
+27 AND 28 = 30
+26 XOR 30 = 31
+1 XOR 31 = 32
+19 XOR 31 = 33
+1 XOR 33 = 34
+32 AND 33 = 35
+31 XOR 35 = 36
+2 XOR 36 = 37
+20 XOR 36 = 38
+2 XOR 38 = 39
+37 AND 38 = 40
+36 XOR 40 = 41
+3 XOR 41 = 42
+21 XOR 41 = 43
+3 XOR 43 = 44
+42 AND 43 = 45
+41 XOR 45 = 46
+4 XOR 46 = 47
+22 XOR 46 = 48
+4 XOR 48 = 49
+47 AND 48 = 50
+46 XOR 50 = 51
+5 XOR 51 = 52
+23 XOR 51 = 53
+5 XOR 53 = 54
+52 AND 53 = 55
+51 XOR 55 = 56
+6 XOR 56 = 57
+24 XOR 56 = 58
+6 XOR 58 = 59
+57 AND 58 = 60
+56 XOR 60 = 61
+7 XOR 61 = 62
+25 XOR 61 = 63
+7 XOR 63 = 64
+62 AND 63 = 65
+61 XOR 65 = 66
+64 XOR 17 = 67
+OUT = 67 VALUE = false
+false
+Gen running time:3.66306 ms.
+0
+overall :47.265123ms.
+Total Time 	 GC CPU Time	 GCIO Time	 OTCPU Time	 OTIO Time
+
+0.0	0 (counter is :1)	0.0 0.0	0.0
+
+Number of Gate:0
